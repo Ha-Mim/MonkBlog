@@ -1,0 +1,191 @@
+﻿@using MonkBlog.Models
+@model MonkBlog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- CONTENT -->
+<div id="content">
+    <!-- CONTAINER -->
+    <div class="container">
+
+        <div class="row">
+            <!-- MAIN BLOG CONTENT -->
+            <div class="col-md-9 col-sm-9 main-content">
+                <p class="alert alert-success" >
+                    @ViewBag.Result
+                </p>
+                <!-- POST TEXT -->
+                <div class="row">
+                    <div class="col-md-1 col-sm-1">
+                        <!-- POST INFO -->
+                        <div class="post-info">
+                            <div class=" post-info-icon"><i class="icon-book"></i></div>
+                            <div class="post-info-date"> @Model.PostedDate.Month <span class="post-info-day">@Model.PostedDate.Day</span>@Model.PostedDate.Year</div>
+                            <div><input type="hidden" name="id" value=@Model.ArticleId /></div>
+                        </div>
+                        <!-- POST INFO END -->
+                    </div>
+
+                    <!-- POST CONTENT -->
+                    <div class="col-md-11 col-sm-11 post-content">
+                        <div class="post-media-wrap"><a href="blog-post.html"><img src="img/blog-img-1.png" alt=""></a></div>
+                        <h4>@Model.Title</h4>
+                        <p>
+                           @Html.Raw(Model.Description)
+                        </p>
+
+                        <!--  POST META INFO -->
+                        <div class="post-meta-info clearfix">
+                            <div class="post-meta-postedby">
+                                <i class="icon-bookmark-empty"></i>&nbsp;Posted by <a href="">@Model.User.GetFullName()</a>
+                            </div>
+
+                        </div>
+                        <!--  POST META INFO END -->
+                        <!-- SOCIAL SHARE -->
+                        <div class="social-share">
+                            <span class="share">Share with friends:</span>
+                            <ul class="socialcount" data-url="http://www.google.com/" data-share-text="Google is a search engine">
+                                <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.google.com/" title="Share on Facebook"><i class="icon-facebook"></i><span class="count">Like</span></a></li>
+                                <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://www.google.com/" title="Share on Twitter"><i class="icon-twitter"></i><span class="count">Tweet</span></a></li>
+                                <li class="googleplus"><a href="https://plus.google.com/share?url=http://www.google.com/" title="Share on Google Plus"><i class="icon-google-plus"></i><span class="count">+1</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- SOCIAL SHARE END -->
+
+                    </div>
+                    <!-- POST CONTENT END -->
+                </div>
+
+
+                <div class="row margin-bot">
+
+                    <!-- COMMENTS -->
+                    <div id="comments" class="col-md-12 col-sm-12">
+                        <div class="title"><h5>Comments:</h5></div>
+
+                        <div class="comments-container">
+                            <ol class="commentlist">
+                                @foreach (var article in Model.Comments)
+                                {
+                                    <li class="comment">
+                                        <div class="comment-container">
+                                            <div class="comment-box">
+                                                <div class="comment-author"><h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @article.User.GetFullName()</h4></div>
+                                                <div class="comment-text"><p><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @article.Description</p></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+
+                            </ol>
+
+                            <div id="respond" class="leave-comment">
+                                @if (Session["userid"] == null)
+                                {
+                                    <p>@Html.ActionLink("You have to login to comment on this post", "Login", "User")</p><br />
+                                }
+
+                                @if (Session["userid"] != null)
+                                {
+                                    <div class="respond-form">
+                                        <form action="" method="post">
+                                            <div id="comment-input">
+                                                <div class="input-group">
+                                                    <input type="text" name="author" id="author" value="@Model.User.GetFullName()" readonly="" size="22" tabindex="1" aria-required="true" class="input-name"><span class="input-group-addon"><i class="icon-user"></i></span>
+                                                </div>
+                                                <div class="input-group">
+                                                    <input type="text" name="email" id="email" value="@Model.User.Email" readonly="" size="22" tabindex="2" aria-required="true" class="input-email"><span class="input-group-addon"><i class="icon-envelope-alt"></i></span>
+                                                </div>
+
+                                            </div>
+                                            <div id="comment-textarea">
+                                                <textarea name="comment" id="comment" cols="39" rows="4" tabindex="4" class="textarea-comment" placeholder="Comment..."></textarea>
+                                            </div>
+                                            <div id="comment-submit">
+                                                <p></p>
+                                                <div>
+                                                    <input name="submit" type="submit" id="submit" tabindex="5" value="Post Comment" class="comment-submit btn-submit btn">
+                                                </div><p></p>
+                                                <input type="hidden" name="comment_post_ID" value="213" id="comment_post_ID"> <input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- COMMENTS END -->
+
+                </div>
+                <!-- POST TEXT END -->
+
+            </div>
+            <!-- MAIN BLOG CONTENT END -->
+            <div class="col-md-3 col-sm-3 sidebar">
+
+                
+                <!-- POSTS -->
+                <div class="widget widget-posts">
+
+                    <ul class="nav nav-tabs" id="widget-post-tab">
+                        <li class="active"><a href="#recent" data-toggle="tab"><span class="hidden-sm">Recent</span><i class="icon-book visible-sm"></i></a></li>
+                        <li><a href="#popular" data-toggle="tab"><span class="hidden-sm">Popular</span><i class="icon-star visible-sm"></i></a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="recent">
+                            <div class="widget widget-categories">
+
+                                <ul>
+                                    <li><a href="#">Webdesign (12)</a></li>
+                                    <li><a href="#">Branding (4)</a></li>
+                                    <li><a href="#">Video (5)</a></li>
+                                    <li><a href="#">Text (1)</a></li>
+                                    <li><a href="#">Quote (5)</a></li>
+                                    <li><a href="#">Gallery (10)</a></li>
+                                    <li><a href="#">Link (2)</a></li>
+                                    <li><a href="#">Gravida (20)</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="popular">
+                            <div class="widget widget-categories">
+
+                                <ul>
+                                    <li><a href="#">Webdesign (12)</a></li>
+                                    <li><a href="#">Branding (4)</a></li>
+                                    <li><a href="#">Video (5)</a></li>
+                                    <li><a href="#">Text (1)</a></li>
+                                    <li><a href="#">Quote (5)</a></li>
+                                    <li><a href="#">Gallery (10)</a></li>
+                                    <li><a href="#">Link (2)</a></li>
+                                    <li><a href="#">Gravida (20)</a></li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- POSTS END -->
+
+
+            </div>
+            <!-- SIDEBAR END -->
+
+        </div>
+
+    </div> <!-- CONTAINER END -->
+</div> <!-- CONTENT END -->

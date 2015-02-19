@@ -1,0 +1,105 @@
+﻿@model MonkBlog.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    ViewBag.Breadcrumb = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-sm-12 text-center" style="padding-bottom: 20px;">
+                        @if (@ViewBag.Message != null)
+                        {
+                            <p class="alert alert-success">
+                                @ViewBag.Message
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="alert alert-danger">
+                                @ViewBag.Error
+                            </p>
+                        }
+
+
+                    </div>
+                </div>
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Username)
+                            @Html.ValidationMessageFor(model => model.Username)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            <div class="col-md-8">
+                                <input class="text-box single-line password" data-val="true" type="password" name="password" id="password" />
+                                </div>
+                                  
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="control-label col-md-2">
+                                <label for="confirm">Confirm Password</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="text-box single-line password" data-val="true" type="password" name="confirm" id="confirm" />
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Email)
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.FirstName)
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.LastName)
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-6 col-md-4">
+                                <input type="submit" value="Register" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+
+                
+
+
+            }
+        </div>
+    </div>
+</div>

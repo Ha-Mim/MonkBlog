@@ -1,0 +1,67 @@
+﻿@model MonkBlog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Article</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <img src=@Model.Imagepath />
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.RawView(@Model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPublished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPublished)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfView)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfView)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ArticleId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

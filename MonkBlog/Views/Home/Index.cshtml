@@ -1,0 +1,127 @@
+﻿@model IEnumerable<MonkBlog.Models.Article>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="content">
+    <!-- CONTAINER -->
+    <div class="container">
+
+        <div class="row">
+            <!-- MAIN BLOG CONTENT -->
+            <div class="col-md-9 col-sm-9 main-content">
+                <p class="alert alert-danger">
+                    @ViewBag.Error
+                </p>
+                <!-- POST TEXT -->
+                <div class="row post-container">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-1 col-sm-1">
+                            <!-- POST INFO -->
+                            <div class="post-info">
+                                <div class=" post-info-icon"><i class="icon-book"></i></div>
+                                <div class="post-info-date">@item.PostedDate.Month<span class="post-info-day">@item.PostedDate.Day</span>@item.PostedDate.Year</div>
+                            </div>
+                            <!-- POST INFO END -->
+                        </div>
+
+
+                        <div class="col-md-11 col-sm-11 post-content">
+                            <div class="post-media-wrap">
+                                <a href="blog-post.html"><img src="img/blog-img-1.png" alt=""></a>
+                            </div>
+                            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+
+                            <p>@Html.Raw(item.Description)</p>
+
+                            <div class="post-meta-info clearfix">
+                                <div class="post-meta-postedby">
+                                    <i class="icon-bookmark-empty"></i>&nbsp;Posted by <span>@item.User.GetFullName()</span>
+                                </div>
+
+                                <div class="post-meta-readmore">
+                                    @Html.ActionLink("See More", "Details", new { id = item.ArticleId });
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+
+
+                </div>
+                <!-- POST TEXT END -->
+
+            </div>
+            <!-- MAIN BLOG CONTENT END -->
+            <!-- SIDEBAR -->
+            <div class="col-md-3 col-sm-3 sidebar">
+
+                <!-- SEARCH -->
+                <div class="widget widget-search">
+                    <form class="search" method="post">
+                        @Html.AntiForgeryToken()
+                        <fieldset>
+
+                            <div class="input-group">
+                                <input name="search" id="s" type="text" value="" placeholder="Search ...">
+                                <span class="input-group-addon"><i class="icon-search"></i></span>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- SEARCH END -->
+                <!-- POSTS -->
+                <div class="widget widget-posts">
+
+                    <ul class="nav nav-tabs" id="widget-post-tab">
+                        <li class="active"><a href="#recent" data-toggle="tab"><span class="hidden-sm">Recent</span><i class="icon-book visible-sm"></i></a></li>
+                        <li><a href="#popular" data-toggle="tab"><span class="hidden-sm">Popular</span><i class="icon-star visible-sm"></i></a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="recent">
+                            <div class="widget widget-categories">
+
+                                <ul>
+                                    @foreach (MonkBlog.Models.Article aArticle in @ViewBag.recent)
+                                    {
+                                        <li>@Html.ActionLink(@aArticle.Title, "Details", new { id = aArticle.ArticleId })</li>
+                                    }
+
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="popular">
+                            <div class="widget widget-categories">
+
+                                <ul>
+                                    @foreach (MonkBlog.Models.Article aArticle in @ViewBag.mostviewed)
+                                    {
+                                        <li>@Html.ActionLink(@aArticle.Title, "Details", new { id = aArticle.ArticleId })</li>
+                                    }
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- POSTS END -->
+
+
+            </div>
+            <!-- SIDEBAR END -->
+
+        </div>
+
+    </div> <!-- CONTAINER END -->
+</div> <!-- CONTENT END -->
